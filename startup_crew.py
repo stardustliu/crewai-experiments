@@ -11,14 +11,17 @@ mistral = Ollama(model="mistral")
 api = os.environ.get("OPENAI_API_KEY")
 
 # To load gemini (this api is for free: https://makersuite.google.com/app/apikey)
-api_gemini = os.environ.get("GEMINI-API-KEY")
+api_gemini = os.environ.get("GEMINI_API_KEY")
 llm = ChatGoogleGenerativeAI(
     model="gemini-pro", verbose=True, temperature=0.1, google_api_key=api_gemini
 )
 
 marketer = Agent(
+    # 市场研究分析师
     role="Market Research Analyst",
+    # 了解我的产品需求有多大，并建议如何达到最广泛的客户群。
     goal="Find out how big is the demand for my products and suggest how to reach the widest possible customer base",
+    # 你是市场需求、目标受众和竞争对手的专家。这对于验证一个想法是否满足市场需求，是否有吸引广泛受众的潜力至关重要。你擅长想出如何吸引尽可能广泛的受众的主意。
     backstory="""You are an expert at understanding the market demand, target audience, and competition. This is crucial for 
 		validating whether an idea fulfills a market need and has the potential to attract a wide audience. You are good at coming up
 		with ideas on how to appeal to widest possible audience.
@@ -29,8 +32,12 @@ marketer = Agent(
 )
 
 technologist = Agent(
+    # 技术专家
     role="Technology Expert",
+    # 了解我的产品需求有多大，并建议如何达到最广泛的客户群。
     goal="Make assessment on how technologically feasable the company is and what type of technologies the company needs to adopt in order to succeed",
+    # 您是技术领域的先见之明者，对当前和新兴技术趋势有着深刻的理解。您的专长不仅在于了解技术，还在于预见如何利用技术来解决现实问题并推动业务创新。您擅长识别哪种技术解决方案最适合不同的商业模式和需求，
+    # 确保公司始终走在时代前沿。您的见解对于将技术与业务战略保持一致至关重要，确保技术采用不仅提升了运营效率，还在市场上提供了竞争优势。
     backstory="""You are a visionary in the realm of technology, with a deep understanding of both current and emerging technological trends. Your 
 		expertise lies not just in knowing the technology but in foreseeing how it can be leveraged to solve real-world problems and drive business innovation.
 		You have a knack for identifying which technological solutions best fit different business models and needs, ensuring that companies stay ahead of 
@@ -42,8 +49,12 @@ technologist = Agent(
 )
 
 business_consultant = Agent(
+    # 业务拓展顾问
     role="Business Development Consultant",
+    # 评估并就商业模式、可扩展性和潜在的收入来源提供建议，以确保长期的可持续发展和盈利能力
     goal="Evaluate and advise on the business model, scalability, and potential revenue streams to ensure long-term sustainability and profitability",
+    # 您是一位经验丰富的专业人士，擅长制定商业战略。您的洞察力对于将创新理念转化为可行的商业模式至关重要。您对各行业有着深刻的理解，善于识别和开发潜在的收入来源。
+    # 您在可扩展性方面的经验确保企业能够在不损害其价值观或运营效率的情况下实现增长。您的建议不仅关乎眼前的收益，而是关于打造一个能够在不断变化的市场中蓬勃发展的坚韧而适应性强的企业。
     backstory="""You are a seasoned professional with expertise in shaping business strategies. Your insight is essential for turning innovative ideas 
 		into viable business models. You have a keen understanding of various industries and are adept at identifying and developing potential revenue streams. 
 		Your experience in scalability ensures that a business can grow without compromising its values or operational efficiency. Your advice is not just
@@ -54,6 +65,8 @@ business_consultant = Agent(
 )
 
 task1 = Task(
+    # 分析市场对鞋垫孔塞的需求，使这种标志性的鞋类看起来不那么像瑞士奶酪。
+    # 撰写一份详细报告，描述理想顾客的特征，以及如何触达最广泛的受众群体。报告必须简洁明了，至少包括10个要点，并且必须涵盖营销这类业务时最重要的领域。
     description="""Analyze what the market demand for plugs for holes in crocs (shoes) so that this iconic footware looks less like swiss cheese. 
 		Write a detailed report with description of what the ideal customer might look like, and how to reach the widest possible audience. The report has to 
 		be concise with at least 10 bullet points and it has to address the most important areas when it comes to marketing this type of business.
@@ -62,6 +75,8 @@ task1 = Task(
 )
 
 task2 = Task(
+    # 分析如何生产鳄鱼鞋（鞋子）的插头，使这种标志性的鞋子看起来不那么像瑞士奶酪。撰写一份详细报告，其中描述业务需要使用哪些技术才能制造高质量的T恤。
+    # 报告必须简洁，至少包括10个要点，并且必须涉及制造这种类型业务时最重要的领域。
     description="""Analyze how to produce plugs for crocs (shoes) so that this iconic footware looks less like swiss cheese.. Write a detailed report 
 		with description of which technologies the business needs to use in order to make High Quality T shirts. The report has to be concise with 
 		at least 10  bullet points and it has to address the most important areas when it comes to manufacturing this type of business. 
@@ -70,6 +85,8 @@ task2 = Task(
 )
 
 task3 = Task(
+    # 分析和总结市场和技术报告，并撰写详细的商业计划，描述如何打造一个可持续盈利的“为卡鞋（鞋子）提供塞子，
+    # 使这款标志性的鞋子看起来不那么像瑞士奶酪”的业务。商业计划必须简洁，至少包括10个要点，5个目标，并且必须包含目标应该在何时实现以及何时实现的时间表。
     description="""Analyze and summarize marketing and technological report and write a detailed business plan with 
 		description of how to make a sustainable and profitable "plugs for crocs (shoes) so that this iconic footware looks less like swiss cheese" business. 
 		The business plan has to be concise with 

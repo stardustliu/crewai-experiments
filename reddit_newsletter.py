@@ -9,14 +9,13 @@ from crewai import Agent, Task, Process, Crew
 
 from langchain.agents import load_tools
 
-# To load Human in the loop
+#加载human参与循环
 human_tools = load_tools(["human"])
 
-# To Load GPT-4
+# 加载gpt4的api key
 api = os.environ.get("OPENAI_API_KEY")
 
-
-# To Load Local models through Ollama
+# 通过Ollama使用本地模型
 mistral = Ollama(model="mistral")
 
 
@@ -25,10 +24,11 @@ class BrowserTool:
     def scrape_reddit(max_comments_per_post=7):
         """Useful to scrape a reddit content"""
         reddit = praw.Reddit(
-            client_id="client-id",
-            client_secret="client-secret",
-            user_agent="user-agent",
+            client_id="替换为自己的client-id",
+            client_secret="替换为自己的client-secret",
+            user_agent="替换为自己的user-agent",
         )
+        # 定位到LocalLLama 频道
         subreddit = reddit.subreddit("LocalLLaMA")
         scraped_data = []
 
@@ -54,15 +54,19 @@ class BrowserTool:
 
 
 """
-- define agents that are going to research latest AI tools and write a blog about it 
-- explorer will use access to internet and LocalLLama subreddit to get all the latest news
-- writer will write drafts 
-- critique will provide feedback and make sure that the blog text is engaging and easy to understand
+- 定义研究最新人工智能工具并撰写博客的agents
+- explorer 将使用互联网和LocalLLama subreddit来获取所有最新消息
+- writer 将撰写草稿
+- critique 将提供反馈，并确保博客文本引人入胜且易于理解
 """
 
+# explorer agent 定义
 explorer = Agent(
     role="Senior Researcher",
+    # 目标：在 2024 年，在 LocalLLama 子论坛上找到并探索最令人兴奋的项目和公司
     goal="Find and explore the most exciting projects and companies on LocalLLama subreddit in 2024",
+    # 你是一位优秀的策略专家，擅长发现人工智能、技术和机器学习领域的新兴趋势和公司。您擅长在LocalLLama专栏中找到有趣、令人兴奋的项目。
+    # 你将抓取的数据转化为详细报告，报告中列出了人工智能/机器学习领域中最令人兴奋的项目和公司的名称。请仅使用来自LocalLLama专栏的抓取数据进行报告。
     backstory="""You are and Expert strategist that knows how to spot emerging trends and companies in AI, tech and machine learning. 
     You're great at finding interesting, exciting projects on LocalLLama subreddit. You turned scraped data into detailed reports with names
     of most exciting projects an companies in the ai/ml world. ONLY use scraped data from LocalLLama subreddit for the report.
@@ -73,9 +77,13 @@ explorer = Agent(
     llm=mistral,  # remove to use default gpt-4
 )
 
+# writer agent 定义
 writer = Agent(
     role="Senior Technical Writer",
+    # 用简单易懂的词汇撰写关于最新AI项目的引人入胜和有趣的博客文章
     goal="Write engaging and interesting blog post about latest AI projects using simple, layman vocabulary",
+    # 您是一位在技术创新领域，尤其是人工智能和机器学习领域的专业作家。您知道如何以引人入胜、有趣但简单、直接且简洁的方式进行写作。
+    # 您知道如何通过使用通俗易懂的词语，将复杂的技术术语以有趣的方式呈现给普通观众。只使用来自LocalLLaMA subreddit的抓取数据来撰写博客
     backstory="""You are an Expert Writer on technical innovation, especially in the field of AI and machine learning. You know how to write in 
     engaging, interesting but simple, straightforward and concise. You know how to present complicated technical terms to general audience in a 
     fun way by using layman words.ONLY use scraped data from LocalLLama subreddit for the blog.""",
@@ -83,9 +91,14 @@ writer = Agent(
     allow_delegation=True,
     llm=mistral,  # remove to use default gpt-4
 )
+
+# critique agent 定义
 critic = Agent(
     role="Expert Writing Critic",
+    # 提供反馈并批评博客文章草稿。确保语气和写作风格引人入胜，简洁明了。
     goal="Provide feedback and criticize blog post drafts. Make sure that the tone and writing style is compelling, simple and concise",
+    # 您擅长给技术作家提供反馈。您能够辨别博客文本是否精炼、简单或足够引人入胜。您知道如何提供有益的反馈，可以改善任何文本。
+    # 您知道如何确保文本保持技术性和见解性，同时使用通俗易懂的术语
     backstory="""You are an Expert at providing feedback to the technical writers. You can tell when a blog text isn't concise,
     simple or engaging enough. You know how to provide helpful feedback that can improve any text. You know how to make sure that text 
     stays technical and insightful by using layman terms.
@@ -138,15 +151,16 @@ task_critique = Task(
     agent=critic,
 )
 
-# instantiate crew of agents
+# 实例化crew的代理
 crew = Crew(
     agents=[explorer, writer, critic],
     tasks=[task_report, task_blog, task_critique],
     verbose=2,
-    process=Process.sequential,  # Sequential process will have tasks executed one after the other and the outcome of the previous one is passed as extra content into this next.
+    # 顺序流程将一个接一个地执行任务，并且前一个任务的结果作为额外内容传递到下一个任务
+    process=Process.sequential,  
 )
 
-# Get your crew to work!
+# 启动crew开始工作
 result = crew.kickoff()
 
 print("######################")
