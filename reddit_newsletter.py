@@ -6,17 +6,32 @@ from langchain.tools import tool
 from langchain.llms import Ollama
 from crewai import Agent, Task, Process, Crew
 
-
 from langchain.agents import load_tools
+from groq import Groq
+from openai import OpenAI
 
 #加载human参与循环
 human_tools = load_tools(["human"])
 
 # 加载gpt4的api key
-api = os.environ.get("OPENAI_API_KEY")
+#api = os.environ.get("OPENAI_API_KEY")
 
 # 通过Ollama使用本地模型
-mistral = Ollama(model="mistral")
+#mistral = Ollama(model="mistral")
+
+#groq_client = OpenAI(
+#    #api_key = os.environ.get("GROQ_API_KEY"),
+#    api_key = "sk-4tXCPaKykcp9n1oeZ2JZUtg88LOkoxyamazEtfp8PP42d5cw",
+#    base_url = "https://api.moonshot.cn/v1",
+#    #model = "llama2-70b-4096",
+#)
+
+os.environ["OPENAI_MODEL_NAME"]="gpt-3.5-turbo-0125"
+#os.environ["OPENAI_MODEL_NAME"]="moonshot-v1-8k"
+
+#OPENAI_API_KEY="sk-4tXCPaKykcp9n1oeZ2JZUtg88LOkoxyamazEtfp8PP42d5cw"
+#OPENAI_API_BASE="https://api.moonshot.cn/v1"
+#OPENAI_MODEL_NAME="moonshot-v1-8k"
 
 
 class BrowserTool:
@@ -24,9 +39,9 @@ class BrowserTool:
     def scrape_reddit(max_comments_per_post=7):
         """Useful to scrape a reddit content"""
         reddit = praw.Reddit(
-            client_id="替换为自己的client-id",
-            client_secret="替换为自己的client-secret",
-            user_agent="替换为自己的user-agent",
+            client_id="2v3pe84Oh5l-gunXUifPgg",
+            client_secret="0C1wLwkZxE3ygGlGhcY8LALh4461wQ",
+            user_agent="lg_news_bot",
         )
         # 定位到LocalLLama 频道
         subreddit = reddit.subreddit("LocalLLaMA")
@@ -69,12 +84,13 @@ explorer = Agent(
     # 你将抓取的数据转化为详细报告，报告中列出了人工智能/机器学习领域中最令人兴奋的项目和公司的名称。请仅使用来自LocalLLama专栏的抓取数据进行报告。
     backstory="""You are and Expert strategist that knows how to spot emerging trends and companies in AI, tech and machine learning. 
     You're great at finding interesting, exciting projects on LocalLLama subreddit. You turned scraped data into detailed reports with names
-    of most exciting projects an companies in the ai/ml world. ONLY use scraped data from LocalLLama subreddit for the report.
+    of most exciting projects an companies in the ai/ml world. ONLY use scraped data from LocalLLama subreddit for the report. Answer in Chinese
     """,
     verbose=True,
     allow_delegation=False,
     tools=[BrowserTool().scrape_reddit] + human_tools,
-    llm=mistral,  # remove to use default gpt-4
+    #llm=mistral,  # remove to use default gpt-4
+    #llm=groq_client,
 )
 
 # writer agent 定义
@@ -86,10 +102,11 @@ writer = Agent(
     # 您知道如何通过使用通俗易懂的词语，将复杂的技术术语以有趣的方式呈现给普通观众。只使用来自LocalLLaMA subreddit的抓取数据来撰写博客
     backstory="""You are an Expert Writer on technical innovation, especially in the field of AI and machine learning. You know how to write in 
     engaging, interesting but simple, straightforward and concise. You know how to present complicated technical terms to general audience in a 
-    fun way by using layman words.ONLY use scraped data from LocalLLama subreddit for the blog.""",
+    fun way by using layman words.ONLY use scraped data from LocalLLama subreddit for the blog. Answer in Chinese""",
     verbose=True,
     allow_delegation=True,
-    llm=mistral,  # remove to use default gpt-4
+    #llm=mistral,  # remove to use default gpt-4
+    #llm=groq_client,
 )
 
 # critique agent 定义
@@ -101,11 +118,12 @@ critic = Agent(
     # 您知道如何确保文本保持技术性和见解性，同时使用通俗易懂的术语
     backstory="""You are an Expert at providing feedback to the technical writers. You can tell when a blog text isn't concise,
     simple or engaging enough. You know how to provide helpful feedback that can improve any text. You know how to make sure that text 
-    stays technical and insightful by using layman terms.
+    stays technical and insightful by using layman terms. Answer in Chinese. 
     """,
     verbose=True,
     allow_delegation=True,
-    llm=mistral,  # remove to use default gpt-4
+    #llm=mistral,  # remove to use default gpt-4
+    #llm=groq_client,
 )
 
 task_report = Task(
@@ -115,6 +133,7 @@ task_report = Task(
     Each bullet point MUST contain 3 sentences that refer to one specific ai company, product, model or anything you found on subreddit LocalLLama.  
     """,
     agent=explorer,
+    expected_output="A detailed report on the latest rising projects in AI, generated from scraped data from LocalLLama subreddit. The report contains bullet points with 5-10 exciting new AI projects and tools, and each bullet point contains 3 sentences that refer to one specific ai company, product, model or anything found on subreddit LocalLLama. Report output in Chinese"
 )
 
 task_blog = Task(
@@ -134,6 +153,7 @@ task_blog = Task(
     ```
     """,
     agent=writer,
+    expected_output="A blog article with text only and with a short but impactful headline and at least 10 paragraphs. Blog should summarize the report on latest ai tools found on localLLama subreddit. Style and tone should be compelling and concise, fun, technical but also use layman words for the general public. Name specific new, exciting projects, apps and companies in AI world. Don't write '**Paragraph [number of the paragraph]:**', instead start the new paragraph in a new line. Write names of projects and tools in BOLD. ALWAYS include links to projects/tools/research papers. ONLY include information from LocalLLAma. Blog content output in Chinese",
 )
 
 task_critique = Task(
@@ -149,6 +169,7 @@ task_critique = Task(
     Make sure that it does and if it doesn't, rewrite it accordingly.
     """,
     agent=critic,
+    expected_output="The Output MUST have the following markdown format: ## [Title of post](link to project) - Interesting facts - Own thoughts on how it connects to the overall theme of the newsletter ## [Title of second post](link to project) - Interesting facts - Own thoughts on how it connects to the overall theme of the newsletter Make sure that it does and if it doesn't, rewrite it accordingly."
 )
 
 # 实例化crew的代理
