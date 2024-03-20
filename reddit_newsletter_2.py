@@ -25,7 +25,7 @@ class BrowserTool:
         """Useful to scrape a reddit content"""
         reddit = praw.Reddit(
             client_id="2v3pe84Oh5l-gunXUifPgg",
-            client_secret="0C1wLwkZxE3ygGlGhcY8LALh4461wQ",
+            client_secret="",
             user_agent="lg_news_bot",
         )
         # 定位到LocalLLama 频道
