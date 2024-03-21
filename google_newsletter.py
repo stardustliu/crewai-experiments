@@ -5,23 +5,28 @@ from langchain.agents import load_tools
 
 from crewai import Agent, Task, Process, Crew
 from langchain.utilities import GoogleSerperAPIWrapper
+from langchain.tools import DuckDuckGoSearchRun
 
 # to get your api key for free, visit and signup: https://serper.dev/
-os.environ["SERPER_API_KEY"] = "serp-api-here"
+#os.environ["SERPER_API_KEY"] = "serp-api-here"
 
-search = GoogleSerperAPIWrapper()
+#search = GoogleSerperAPIWrapper()
 
-search_tool = Tool(
-    name="Scrape google searches",
-    func=search.run,
-    description="useful for when you need to ask the agent to search the internet",
-)
+#search_tool = Tool(
+#    name="Scrape google searches",
+#    func=search.run,
+#    description="useful for when you need to ask the agent to search the internet",
+#)
+
+search_tool = DuckDuckGoSearchRun()
 
 # Loading Human Tools
 human_tools = load_tools(["human"])
 
 # To Load GPT-4
 api = os.environ.get("OPENAI_API_KEY")
+
+os.environ["OPENAI_MODEL_NAME"]="gpt-3.5-turbo-0125"
 
 
 """
@@ -33,11 +38,12 @@ api = os.environ.get("OPENAI_API_KEY")
 explorer = Agent(
     role="Senior Researcher",
     goal="Find and explore the most exciting projects and companies in the ai and machine learning space in 2024",
+	# 您是专家战略家，知道如何发现人工智能、技术和机器学习领域的新兴趋势和公司。您非常擅长在 LocalLLama subreddit 上寻找有趣、令人兴奋的项目。 您将抓取的数据转化为详细的报告，其中包含人工智能/机器学习领域最令人兴奋的项目和公司的名称。 报告仅使用从互联网上抓取的数据
     backstory="""You are and Expert strategist that knows how to spot emerging trends and companies in AI, tech and machine learning. 
     You're great at finding interesting, exciting projects on LocalLLama subreddit. You turned scraped data into detailed reports with names
     of most exciting projects an companies in the ai/ml world. ONLY use scraped data from the internet for the report.
     """,
-    verbose=True,
+    verbose=False,
     allow_delegation=False,
     tools=[search_tool],
 )
@@ -45,33 +51,39 @@ explorer = Agent(
 writer = Agent(
     role="Senior Technical Writer",
     goal="Write engaging and interesting blog post about latest AI projects using simple, layman vocabulary",
+	# 您是技术创新方面的专家作家，特别是在人工智能和机器学习领域。 你知道如何写得引人入胜、有趣但简单、直接和简洁。 您知道如何使用通俗易懂的语言，
+    # 以有趣的方式向一般受众展示复杂的技术术语。博客只使用从互联网上抓取的数据。
     backstory="""You are an Expert Writer on technical innovation, especially in the field of AI and machine learning. You know how to write in 
     engaging, interesting but simple, straightforward and concise. You know how to present complicated technical terms to general audience in a 
     fun way by using layman words.ONLY use scraped data from the internet for the blog.""",
-    verbose=True,
+    verbose=False,
     allow_delegation=True,
 )
 critic = Agent(
     role="Expert Writing Critic",
     goal="Provide feedback and criticize blog post drafts. Make sure that the tone and writing style is compelling, simple and concise",
+	# 您是向技术作家提供反馈的专家。 您可以判断博客文本何时不够简洁、简单或不够吸引人。 您知道如何提供有用的反馈来改进任何文本。 您知道如何使用外行术语来确保文本保持技术性和洞察力。
     backstory="""You are an Expert at providing feedback to the technical writers. You can tell when a blog text isn't concise,
     simple or engaging enough. You know how to provide helpful feedback that can improve any text. You know how to make sure that text 
     stays technical and insightful by using layman terms.
     """,
-    verbose=True,
+    verbose=False,
     allow_delegation=True,
 )
 
 task_report = Task(
+	# 利用并总结从互联网上抓取的数据，对人工智能领域最新崛起的项目做出详细报告。 仅使用抓取的数据来生成报告。 您的最终答案必须是完整的分析报告，仅限文本，忽略任何代码或非文本的任何内容。 该报告必须有要点以及 5-10 个令人兴奋的新人工智能项目和工具。 写下每个工具和项目的名称。每个要点必须包含 3 个句子，引用一个特定的人工智能公司、产品、型号或您在互联网上找到的任何内容
     description="""Use and summarize scraped data from the internet to make a detailed report on the latest rising projects in AI. Use ONLY 
     scraped data to generate the report. Your final answer MUST be a full analysis report, text only, ignore any code or anything that 
     isn't text. The report has to have bullet points and with 5-10 exciting new AI projects and tools. Write names of every tool and project. 
     Each bullet point MUST contain 3 sentences that refer to one specific ai company, product, model or anything you found on the internet.  
     """,
     agent=explorer,
+	expected_output="Summarize the latest rising projects in AI based on scraped data from the internet. Provide a detailed analysis report with bullet points highlighting 5-10 exciting new AI projects and tools. Each bullet point should contain 3 sentences referencing a specific AI company, product, model, or any relevant information found online."
 )
 
 task_blog = Task(
+	# 撰写一篇仅包含文字的博客文章，标题简短但有影响力，并且至少有 10 个段落。 博客应该总结在 localLLama subreddit 上找到的最新人工智能工具的报告。 风格和语气应该引人注目、简洁、有趣、技术性强，但也要为公众使用通俗易懂的语#言。 说出人工智能世界中具体的、令人兴奋的新项目、应用程序和公司。 不要写“**段落[段落号]：**”，而是在新行中开始新段落。 用粗体写出项目和工具的名称。始终包含项目/工具/研究论文的链接。 仅包含来自 LocalLLAma 的信息。
     description="""Write a blog article with text only and with a short but impactful headline and at least 10 paragraphs. Blog should summarize 
     the report on latest ai tools found on localLLama subreddit. Style and tone should be compelling and concise, fun, technical but also use 
     layman words for the general public. Name specific new, exciting projects, apps and companies in AI world. Don't 
@@ -88,6 +100,11 @@ task_blog = Task(
     ```
     """,
     agent=writer,
+	expected_output="""Write a blog article with text only and with a short but impactful headline and at least 10 paragraphs. Blog should summarize 
+    the report on latest ai tools found on localLLama subreddit. Style and tone should be compelling and concise, fun, technical but also use 
+    layman words for the general public. Name specific new, exciting projects, apps and companies in AI world. Don't 
+    write "**Paragraph [number of the paragraph]:**", instead start the new paragraph in a new line. Write names of projects and tools in BOLD.
+    ALWAYS include links to projects/tools/research papers. ONLY include information from LocalLLAma"""
 )
 
 task_critique = Task(
@@ -103,6 +120,17 @@ task_critique = Task(
     Make sure that it does and if it doesn't, rewrite it accordingly.
     """,
     agent=critic,
+	expected_output="""The Output MUST have the following markdown format:
+    ```
+    ## [Title of post](link to project)
+    - Interesting facts
+    - Own thoughts on how it connects to the overall theme of the newsletter
+    ## [Title of second post](link to project)
+    - Interesting facts
+    - Own thoughts on how it connects to the overall theme of the newsletter
+    ```
+    Make sure that it does and if it doesn't, rewrite it accordingly.
+    """
 )
 
 # instantiate crew of agents
