@@ -17,7 +17,7 @@ human_tools = load_tools(["human"])
 #api = os.environ.get("OPENAI_API_KEY")
 
 # 通过Ollama使用本地模型
-#mistral = Ollama(model="mistral")
+mistral = Ollama(model="mistral")
 
 #groq_client = OpenAI(
 #    #api_key = os.environ.get("GROQ_API_KEY"),
@@ -25,14 +25,6 @@ human_tools = load_tools(["human"])
 #    base_url = "https://api.moonshot.cn/v1",
 #    #model = "llama2-70b-4096",
 #)
-
-os.environ["OPENAI_MODEL_NAME"]="gpt-3.5-turbo-0125"
-#os.environ["OPENAI_MODEL_NAME"]="moonshot-v1-8k"
-
-#OPENAI_API_KEY="sk-4tXCPaKykcp9n1oeZ2JZUtg88LOkoxyamazEtfp8PP42d5cw"
-#OPENAI_API_BASE="https://api.moonshot.cn/v1"
-#OPENAI_MODEL_NAME="moonshot-v1-8k"
-
 
 class BrowserTool:
     @tool("Scrape reddit content")
