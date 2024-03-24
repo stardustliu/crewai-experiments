@@ -7,7 +7,6 @@ from langchain.llms import Ollama
 from crewai import Agent, Task, Process, Crew
 
 from langchain.agents import load_tools
-from groq import Groq
 from openai import OpenAI
 
 #加载human参与循环
@@ -17,15 +16,8 @@ human_tools = load_tools(["human"])
 #api = os.environ.get("OPENAI_API_KEY")
 
 # 通过Ollama使用本地模型
-# llama2 = Ollama(model="llama2")
-mistral = Ollama(model="mistral")
-
-#groq_client = OpenAI(
-#    #api_key = os.environ.get("GROQ_API_KEY"),
-#    api_key = "sk-4tXCPaKykcp9n1oeZ2JZUtg88LOkoxyamazEtfp8PP42d5cw",
-#    base_url = "https://api.moonshot.cn/v1",
-#    #model = "llama2-70b-4096",
-#)
+llama2 = Ollama(model="llama2")
+# mistral = Ollama(model="mistral")
 
 class BrowserTool:
     @tool("Scrape reddit content")
@@ -82,7 +74,7 @@ explorer = Agent(
     verbose=True,
     allow_delegation=False,
     tools=[BrowserTool().scrape_reddit] + human_tools,
-    llm=mistral,  # remove to use default gpt-4
+    llm=llama2,  # remove to use default gpt-4
     #llm=groq_client,
 )
 
@@ -98,7 +90,7 @@ writer = Agent(
     fun way by using layman words.ONLY use scraped data from LocalLLama subreddit for the blog. Answer in Chinese""",
     verbose=True,
     allow_delegation=True,
-    llm=mistral,  # remove to use default gpt-4
+    llm=llama2,  # remove to use default gpt-4
     #llm=groq_client,
 )
 
@@ -115,7 +107,7 @@ critic = Agent(
     """,
     verbose=True,
     allow_delegation=True,
-    llm=mistral,  # remove to use default gpt-4
+    llm=llama2,  # remove to use default gpt-4
     #llm=groq_client,
 )
 
