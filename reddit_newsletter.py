@@ -16,7 +16,7 @@ human_tools = load_tools(["human"])
 #api = os.environ.get("OPENAI_API_KEY")
 
 # 通过Ollama使用本地模型
-# llama2 = Ollama(model="llama2")
+llama2 = Ollama(model="llama2")
 mistral = Ollama(model="mistral")
 
 class BrowserTool:
@@ -29,7 +29,7 @@ class BrowserTool:
             user_agent="lg_news_bot",
         )
         # 定位到LocalLLama 频道
-        subreddit = reddit.subreddit("LocalLLaMA")
+        subreddit = reddit.subreddit("LocalLLaMA")     # r/LocalLLaMA
         scraped_data = []
 
         for post in subreddit.hot(limit=12):
@@ -74,7 +74,7 @@ explorer = Agent(
     verbose=True,
     allow_delegation=False,
     tools=[BrowserTool().scrape_reddit] + human_tools,
-    llm=mistral,  # remove to use default gpt-4
+    llm=llama2,  # remove to use default gpt-4
     #llm=groq_client,
 )
 
@@ -90,7 +90,7 @@ writer = Agent(
     fun way by using layman words.ONLY use scraped data from LocalLLama subreddit for the blog. """,
     verbose=True,
     allow_delegation=True,
-    llm=mistral,  # remove to use default gpt-4
+    llm=llama2,  # remove to use default gpt-4
     #llm=groq_client,
 )
 
@@ -107,7 +107,7 @@ critic = Agent(
     """,
     verbose=True,
     allow_delegation=True,
-    llm=mistral,  # remove to use default gpt-4
+    llm=llama2,  # remove to use default gpt-4
     #llm=groq_client,
 )
 
