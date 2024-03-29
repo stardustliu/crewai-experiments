@@ -1,0 +1,221 @@
+I haven't tested Starling-7b-beta that much (I played around with it a bit the other day and it's definitely one of the better 7b models right now). I have tested many others, also good 7b models such as Mistral-7B-Instruct-v0.2 and fine tunes of Mistral base 0.1. One of my current favorites being 7b-Kunoichi-DPO-v2, which is a very good model also, perhaps even better than Starling in my opinion.
+
+**However**, 7b models do not generally have the same level of depth, coherence and knowledge as larger models, such as 34b and 70b. Recently, I have tasked LLMs in various sizes (7b, 10.7b, 34b and 70b) to write short stories and hypothetical events, and while all of them, more or less, do a pretty good job, it's still the 34b and 70b models that writes the most interesting and captivating stories / texts, because they are more coherent, logical and understand details better.
+
+As for programming, for simple use-cases, like help with writing functions in JavaScript, I think 7b models are excellent. But more complex coding tasks makes 7b models to struggle. For example, I wrote a small C++ program with an intentional memory leak, and I asked various small 7b models and the larger Mixtral model if there were any memory leaks in the code, and only Mixtral pointed out the memory leak. I think the 7b failed at finding the memory leak because it requires a holistic grasp over the code, and small 7b models lacks coherence.
+I tried using it as a simple writing test against GPT-3.5 and it lost pretty convincingly. I would say its generation did seem above average for a 7B but it messed up the details of the characters as 7Bs always do (I made it write a simple convo between Harry Potter & Hermione, and it gave Harry blue eyes and Hermione red hair). Mind you, both models ended in the same "Together, blabla" sequence that gives me cancer. 
+
+I think part of the reason it's so high though is because all of the other big models around it (Claude 2/2.1, Mixtral, 3.5-turbo, Gemini-Pro, Mistral-Next) are all notorious for being over-censored. I think the countless refusals they give are probably weighing down their scores... which is an important thing to consider with this leaderboard as it's not really "which model is smartest", but rather "which model do people like best" - though you could argue a model which refuses to answer is about as dumb as any can be. 
+
+Given that Claude-3 and GPT-4 are still censored, that kind of implies they're a lot better than the others as a baseline.
+It's good for a 7B, it's nowhere near to GPT-4.  Also, the scores you are looking at are not linear, so a 1128 score might be 10 times as good as a 1129
+I would say this ranking is correct for its ability to do human-language tasks. But not for coding or scientific problem-solving where it performs more like ChatGPT-3.5.
+
+It's the best locally hosted model I have tried. Even better than some 70b models. If my job did not pay for ChatGPT Pro and GitHub Copilot then Starling-LM-7B would have been my daily driver.
+I got it's answers for coding and they were completely hallucinated. I was using arena. When I saw the models I was like a 7b, oh ok.
+I've been burned by so many models in the past that have allegedly been better than chatGPT 3.5..
+
+First, let's address the score issue, you don't divide the scores, you subtract the scores. 1158 - 1127 = 31, using that you can infer that GPT-4-0613 will win 54% of the time and Starling 46%. It's a bit unclear as there are multiple ELO systems and Chatbot Arena is not very upfront with the details.
+
+The model is good though, however I suspect a lot of the points is coming from creative writing rather than factual accuracy.
+Starling is my go to local LLM. It is fantastic. I have no idea why more people don't talk about it. I highly recommend you give it a try.
+I tried it and haven't found it any better than OpenChat-3.5-0106 it based on. Still amazing 7b model if you prefer more verbosity over OpenChat or Starling-LM-Alpha.
+Is there a metric that helps assess which model would be best for RAG to use a model for a specific engineering discipline? I am planning to make a free application that has access to hundreds of text books that can be used by students or professionals, and by myself to find information without browsing through books. I have built commercial products before and currently training on the LLM's. It would save time if I can reduce the trial and error. 😁
+Where does this go on the chart?
+https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm
+I tried it and still prefer the alpha. It was too literal and didn't do any sort of brainstorming in my tests. It could be this literal mindedness, plus not being censored, which people are liking.
+We introduce Starling-7B, an open large language model (LLM) trained by Reinforcement Learning from AI Feedback (RLAIF). 
+
+https://starling.cs.berkeley.edu/
+Tried it for RAG. It showed a bad performance. OpenChat 3.5 is much better
+Hmm, I don't know how Chatbot Arena works. I mean I know about the ELO rating and showing multiple answers then let users rate them, but are the question/answer datasets public and decided by LMSys, or can users enter anything they want and then rate the answers?
+If it's a (publicly available) question/answer dataset, then I guess model creators gonna overfit that dataset in training to rank higher?
+Where is this ranking website?
+Does it have a section for coding llm
+Kind of disappointing there isn't a GPTQ variation for Starling. I miss Bloke. Going to try the GGUF and test it out though as the leaderboards are often not a great indicator for things like chatting/roleplay.
+
+Edit: So I was going over the template details while downloading and couldn't help but notice this:
+
+>**Important: Please use the exact chat template provided below for the model. Otherwise there will be a degrade in the performance. The model output can be verbose in rare cases. Please consider setting temperature = 0 to make this happen less.**
+
+I've never seen a model say consider setting temp to zero, why is that?
+
+Edit: Okay so after testing, I see what they mean about the model being verbose, it really does like to talk and expends quite a bit of context in descriptions.
+
+It really does do a good job at describing things, it often gets into a repetitive loop where it wastes context repeating lines from previous replies.
+
+It's a shame too, because if it wasn't for the repetitiveness it would be great and for that reason alone, I can't really suggest it for chatting/roleplay purposes.
+
+Hopefully someone finetunes it or merges it with something that helps correct this. If they did, I'd probably use it more, but I'll continue to experiment with different use cases and settings either way.
+It is that fking good. Better than mistral fine tunes
+Can you run Claude locally? Offline?
+I tried it using ollama and asked it different questions and it just continued the text and never responded to it...
+I don’t know how it gets a rating that high. It’s good, but nothing compared to gpt 3.5 was when it came out. It has weird grammatical errors sometimes and often doesn’t even listen to you. Some of these arena high scores are just good at tricking people superficially. Still better than the other LLM testing boards though.
+Bad in my testing.  Always repeating itself.
+The only real help in coding is using multiple models, I tend to fire quick questions at qwen2 14b or starling 7b then if it looks like a good answer test it out. I'm using a single 3090.
+
+Then move onto gpt4, claude, Gemini, copilot if I need more. 
+
+It no longer feels like the local models are vastly inferior more that it's all about hitting the model with the right training data.
+I have used better 7B models. I wasn't impressed with its performance answering my questions compared to the performance of other 7B models. Specifically it avoided answering details of historical events it had knowledge of.
+Hot take: The LMSYS rankings are essentially worthless. Although it does support longer conversations, the vast majority of votes are from one input > one response. It's simply not possible to judge the quality of an LLM from such a short conversation.
+It is better than the recent Nous Hermes Pro 2.5 based on Mistral 7B. I compared several prompts, and the results were more accurate, better conciseness and less hallucinations. But still far from GPT4 (I used GPT4 Turbo as comparison).
+Maybe good at conversation, but not for benchmarks(mmlu,gsm8k,etc)
+I wouldn't trust any benchmark that has Gemini Pro this high
+34B is probably the border of feasibility for most people with current tech, everything beyond is expensive to run and impossibly expensive to fine tune.
+
+The 20B figure that floats around for 3.5-turbo always struck me as very interesting, it's large enough to be extremely good if well saturated but also small enough to remain practical. The skip between 13B and 33B that the original llama made was probably a huge mistake.
+What smallest model would you recommend for summarization tasks? Input is a written text of ~400-500 words
+Perfect example of a "stupid" small uncensored model winning over much larger hyber-censonsed models. So people gave votes to the smaller model, because it actually gives an answer even if a bad one, compared to the moralizing refusals from the censored models.
+> Mind you, both models ended in the same "Together, blabla" sequence that gives me cancer.
+
+Increase temperature.
+Commercial models use a lot of model independent optimizations like pre/post-processing the prompt, RAG, short term memory and a bunch of other stuff. This is like comparing a car mechanic with a complete workshop to one in underwear.
+Tbf, a model that refuses to answer is only challenging to work with. You can still jailbreak them to get your desired usefulness from their smarts. No amount of prompting will make a 7B model smarter, however
+Elo's are formulated such that a 100 point gap is a 1 in 3 chance to win. A 1 pt Gap means nearly a 50/50 chance of winning - ie the models are almost exactly the same in perceived quality. 
+
+However the ELO's are somewhat misleading in that answer quality and censorship are confounded. Many commercial models will refuse to answer some questions that less censored open models will answer. (And certain commercial models are less censored than others). This results in 'wins' for the model that doesn't refuse to answer the question.
+
+So the interpretation here of a 31 point gap is that for many questions the models perform similarly, and it is likely there are a reasonable number of questions that closed models censor that this model doesn't.
+Would you say it's better than GPT-3.5 Turbo? It's many places above it on the leaderboard, is that just becuase the model hasn't been tested / voted on enough times yet?
+[On EQ-Bench](https://i.imgur.com/UIIKyEe.png)
+
+I agree it seems to be strong *for a 7b*. But benchmarks that are more discriminative of complex reasoning abilities (like MAGI) will show a wider separation of scores between the SOTA models and the top 7b models. Arena ELO doesn't quantify ability differences super well.
+Please note that lmsys uses the basic Elo algorithm, and you can view the source code in their Colab [notebook](https://colab.research.google.com/drive/1KdwokPjirkTmpO_P1WByFNFiqxWQquwH#scrollTo=o_CpbkGEbhrK).
+Helpful post, but I’d argue that they are very up front about the details.  Not only is the code available (https://colab.research.google.com/drive/1KdwokPjirkTmpO_P1WByFNFiqxWQquwH as provided by u/nekoofneko) but also they wrote a pretty huge blogpost about how they are using the Bradly-Terry model of ELO, how they are bootstrapping confidence intervals, etc: https://lmsys.org/blog/2023-12-07-leaderboard/
+How does 31 result in 54%? I'm just curious because I'm not familiar with the scoring here.
+I tried starling months back and immediately saw potential but the model didn't know when to stop generating. It would just go and repeat itself till the whole context was done.
+Yep, its what I use in the presentations to show local LLMs.
+
+Mistral is so crap in comparison.
+would you recommend me starling over other 7b models of mixtral?
+
+I was just building a fun weekend project that takes a paragraph and give it tags from a given list of tags. Models like mistral large and Claude does it so well. I was thinking of using some 7b models instead.
+This leaderboard is made from crowd sourced results, where users submit a prompt to 2 models and then choose which response is best.  Models aren't displayed until they have another user tests.  DBRX (b or i) will have to wait until enough people test it to appear on this leaderboard.  Leaderboard is: "lmsys/chatbot-arena-leaderboard" on hugging face
+
+
+Tldr: Leaderboard comes from practical tests, it may be some time before the new DBRX model has enough samples to place it.
+You can enter any question you want and rate the models
+
+It’s not determined by lmsys 
+https://huggingface.co/spaces/lmsys/chatbot-arena-leaderboard
+You can do gotq on cpu only takes about 30 min.
+Nope, the leaderboard uses their API.
+(I'm pasting this from my other reply) I did not experience that even once. So that could be (probably is) because of incorrect prompt template setup. Here's how you do it in LM Studio:
+
+￼​
+
+https://preview.redd.it/ztdfi46mo5rc1.jpeg?width=518&format=pjpg&auto=webp&s=ec22c94fe9b602bdf5f077848fdbeca39b602d8e
+
+￼​
+
+User message Prefix should be:
+
+GPT4 Correct User:
+
+Suffix should be:
+
+<|end\_of\_turn|>GPT4 Correct Assistant:
+
+Stopping token: <|end\_of\_turn|>
+I did not experience that even once. So that could be (probably is) because of incorrect prompt template setup. Here's how you do it in LM Studio:
+
+https://preview.redd.it/pppbmazvn5rc1.jpeg?width=518&format=pjpg&auto=webp&s=f3ec222ea95175897155313cd16fc5876c8127db
+
+User message Prefix should be:
+
+GPT4 Correct User:
+
+Suffix should be:
+
+<|end\_of\_turn|>GPT4 Correct Assistant:
+
+Stopping token: <|end\_of\_turn|>
+Yes, totally agree. A good 20b model, like a Mistral 20b, would be the perfect spot, especially for users with mid-range PCs. Would most likely be **far** better than Mistral 7b and still not be that heavy to run.
+
+Some good news though, new llama.cpp quantizations + imatrix tech has made it possible to run 70b models on mid-range PCs with good quality. My setup is a pretty bad mid-range PC, and I can now run [Midnight-Rose-70B-v2.0.3](https://huggingface.co/Artefact2/Midnight-Rose-70B-v2.0.3-GGUF) with the imatrix IQ3\_XXS quant. In my use-cases it has created very high-quality outputs. Only drawback it still runs pretty slow, but I can ask it to write a cool story, go grab some coffee meanwhile, and when I'm back, I have an exciting high-quality read ahead of me.
+> 34B is probably the border of feasibility for most people with current tech, everything beyond is expensive to run
+
+I run 70B models (quantized) on CPU and am pretty happy with the results. It's slower than GPT4 or running on the GPU, but it's fast enough for my needs.
+Unless something like multi-LORA is standard local models will not catch up to huge proprietary.
+34B non-MoE is great at Q4/Q5 on a 24GB card.
+
+But we can do better with MoE - e.g. a MoE that has a total of 96B, with just 2-3 activate at say 12B each quantized to Q4 or Q5 that should run quite nicely on a 24GB card or mac with 32+ GB RAM.
+i just question everything right now. DBRX is a good example. Doesn't even compete with ChatGPT3.5. Miles behind ChatGPT4. 
+
+Evaluations are also suspect for quantized versions of its big brother. Evaluation needs to be rerun for each quantized models too I suspect.
+I compared them on lymsys Arena. So just stock settings they have.
+You mean commercial chatbots?  None of that stuff is going on in API calls.
+I should have added that this comparison was done just using lymsys Arena Chatbot, the one where you can compare any two models directly. So I don't know what their settings are but I would figure they should be as close as possible to the actual results people are getting in the Arena leaderboard.
+It would be cool of they had a separate way to indicate censored answers. So instead of picking which answer is better, you could pick that one of the answers (or both) is censored, and instead of the ELO rank, it could influence a separate "censorship rank".
+They should really separate the scoring for censored and uncensored models. You could have a toggle for censored vs uncensored in the chat interface that determines which pool of models are getting blind tested.
+Isn't the gap and chance to win thing dependent on the K factor?
+Probably because GPT3.5 is censored to the point of being useless.  So, it depends on what you are using it for.
+I had trouble finding it, sure now that you point it out I can definitely understand what they are doing. However you need to find the notebook, read through the notebook and understand the programming. Or read through the blog. It should be more exposed on the site.
+The expected score for "Player A"  is S\_A = 1/(1 + 10\^((R\_B-R\_A)/400)), where R\_B and R\_A are their Elo rankings. Substituting now these scores in we get S\_A being 0.5444946. Ergo the 54% mentioned above. (and 1-54% gets us 46%). The [Mathematical details](https://en.wikipedia.org/wiki/Elo_rating_system#Mathematical_details) section of the Elo rating Wikipedia article have more details.
+You can easily look up the Elo algorithm on Wikipedia, as it is simple and clear.
+Models are designed to signal their completion by generating a unique termination tokenHowever, if the chat interface is not configured properly as in you did not set the correct stop token, it may continue to generate text indefinitely.
+Likely some of that is due to the prompting. I don't recall the prompt format for Starling but will give it a try later.
+I definitely would recommend trying it. Both Starling and OpenChat are very good at following instructions and reasoning, plus they have quite versatile training, which makes them easy to recommend. But they're not at Claude or Mistral Large level, of course.
+I have been completely underwhelmed by Mixtral. Maybe the role players are having fun with it, but its basically useless if I can use Starling.
+Then I guess Berkley did a great job with this 7b model :)
+Thank you for the info. I'll try it when I get time
+how ? whats your specs if you dont mind shearing ?
+Same, however I offload a few layers to my 8gig VRAM to speed up generation a little bit. I mostly use 70b models to generate stories, I don't need a real-time chat for that purpose and is happy to wait a few minutes for the generation to complete.
+can you give me a rundown of how to do it? new to all of this
+34B fits into 32GB of system RAM at 4 bits like, barely, if you consider other things running. That's probably the most the average gamer rig or heavy office workstation has these days. Anyone beyond that has to be building an LLM specific system which outside of this sub is exceedingly rare.
+Curious what your t/s is with 70B, what would be a use case (other than RP maybe) for CPU? I can allocate 28GB vRAM running headless, but I'm bottlenecked by the rest of the chip, resulting in 2t/s when I tried Miqu quants.
+>None of that stuff is going on in API calls.
+
+Bold statement, how are you going to prove that? That's one of the big problems and a common complaint I get from clients, you can't be sure what exactly you are talking to when using APIs. GPT4 could be a completely new model or just a tweaked version of 3.5 and we would never know, so how can you know it doesn't use RAG or tree-of-thought for processing your API call?
+
+Also what would giving customers access to bare LLMs via API accomplish? Worst overall performance and all the negative effects of running a standalone LLM like more hallucinations. It would simply be a bad decision from a business perspective.
+Censoring isn't binary. Models have different degrees of censorship and on different topics, and in different ways. Some will refuse to answer, some will cut the response short, some will suggest something else.
+
+It isn't clear cut.
+My understanding (which could be totally wrong :) ) is that k-factor determines how volatile the updates of the ratings are, it doesn't impact win probabilities, nor the gap.
+
+https://stats.stackexchange.com/questions/448621/does-the-elo-k-factor-affect-winning-probabilities
+
+They are using a k-factor of 4 for the llm model comparisons,
+
+https://colab.research.google.com/drive/1KdwokPjirkTmpO_P1WByFNFiqxWQquwH
+
+Fide K-factors (chess ratings),
+
+> K = 40 for a player new to the rating list until he has completed events with at least 30 games
+> K = 20 as long as a player's rating remains under 2400.
+> K = 10 once a player's published rating has reached 2400 and remains at that level subsequently, even if the rating drops below 2400.
+> K = 40 for all players until their 18th birthday, as long as their rating remains under 2300.
+
+https://ratings.fide.com/calculator_rtd.phtml
+https://preview.redd.it/3z58v95nh3rc1.jpeg?width=1284&format=pjpg&auto=webp&s=d6751e63d9105e86bd0e87839c80360ce3bec2f9
+So true haha, it's really sad what they're doing. I hope a smaller open source model actually beats GPT-4 soon...
+Much appreciated! Thanks!
+Ahh I see. I thought it was some custom scoring methodology for the leaderboard haha:)
+I guess this is why GPT4 compulsively writes "in conclusion"
+It was probably an older version. I'll have to peek into LMstudio to see which it was and report back or edit the comment
+Thank you!
+Models have so many uses, making a claim without stating what you are using it for is just noise.
+i5 cpu, 32gig ram, RTX 3060 gpu with 8 gig vram. I run Midnight-Rose-70b mostly on CPU, and offloads a few layers to the gpu to speed up generation speed a little bit.
+Sorry , I’m newbie. May I ask how u offload some layers to vram? Appreciated if u could share papers related to it . Thanks in advance.
+Just go to the llama.cpp or oolama git repository and follow the Readme, it's fairly simple.
+API customers value repeatability, that's why they pin model versions.  Additionally, all the things you describe degrade model provider's ability to reliably price their product, as they are variable pre and postprocessing steps that can potentially be significant, and any changes in the supporting RAG/etc framework over time would destroy repeatability which would be very obvious to customers.  
+
+
+There might be smaller services that do weird stuff like that with API calls but if OpenAI/Anthropic/Mistral were doing it, it'd be very clear by now.
+Try without a jailbreak, ya cheater.
+
+https://i.imgur.com/gUJuZGJ.png
+general purpose like chatgpt
+
+I can make chatgpt do logic out of the box.
+>it'd be very clear by now.
+
+Again how would you notice? Unannounced and undocumented changes to the API and the backend are a very common complaint on the OpenAI forum, so reliability is clearly not a main priority for them. This should be obvious to anyone who has extensively worked with their API. 
+
+>degrade model provider's ability to reliably price their product
+
+Oh you work in marketing, that explains a lot. Jokes aside they will price the product as high as they can, period. It is far easier and far more profitable to simply add healthy sum to the operating costs.
+Are custom instructions to use certain language considered jailbreaks?
+What else would a jailbreak be in this context?

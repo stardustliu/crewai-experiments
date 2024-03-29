@@ -69,7 +69,7 @@ explorer = Agent(
     # 你将抓取的数据转化为详细报告，报告中列出了人工智能/机器学习领域中最令人兴奋的项目和公司的名称。请仅使用来自LocalLLama专栏的抓取数据进行报告。
     backstory="""You are and Expert strategist that knows how to spot emerging trends and companies in AI, tech and machine learning. 
     You're great at finding interesting, exciting projects on LocalLLama subreddit. You turned scraped data into detailed reports with names
-    of most exciting projects an companies in the ai/ml world. ONLY use scraped data from LocalLLama subreddit for the report. Answer in Chinese
+    of most exciting projects an companies in the ai/ml world. ONLY use scraped data from LocalLLama subreddit for the report. 
     """,
     verbose=True,
     allow_delegation=False,
@@ -87,7 +87,7 @@ writer = Agent(
     # 您知道如何通过使用通俗易懂的词语，将复杂的技术术语以有趣的方式呈现给普通观众。只使用来自LocalLLaMA subreddit的抓取数据来撰写博客
     backstory="""You are an Expert Writer on technical innovation, especially in the field of AI and machine learning. You know how to write in 
     engaging, interesting but simple, straightforward and concise. You know how to present complicated technical terms to general audience in a 
-    fun way by using layman words.ONLY use scraped data from LocalLLama subreddit for the blog. Answer in Chinese""",
+    fun way by using layman words.ONLY use scraped data from LocalLLama subreddit for the blog. """,
     verbose=True,
     allow_delegation=True,
     llm=mistral,  # remove to use default gpt-4
@@ -103,7 +103,7 @@ critic = Agent(
     # 您知道如何确保文本保持技术性和见解性，同时使用通俗易懂的术语
     backstory="""You are an Expert at providing feedback to the technical writers. You can tell when a blog text isn't concise,
     simple or engaging enough. You know how to provide helpful feedback that can improve any text. You know how to make sure that text 
-    stays technical and insightful by using layman terms. Answer in Chinese. 
+    stays technical and insightful by using layman terms. 
     """,
     verbose=True,
     allow_delegation=True,
